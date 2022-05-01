@@ -1,5 +1,8 @@
 <?php
 namespace App\Http\Controllers;
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\LoginUserRequest;
+use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Hash;
 use Session;
@@ -7,53 +10,27 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 class CustomAuthController extends Controller
 {
-    public function index()
+    private UserRepositoryInterface $userRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository)
     {
-        return view('LoginRegister.login');
+        $this->userRepository = $userRepository;
     }
 
-    public function customLogin(Request $request)
+    public function login(LoginUserRequest $request)
     {
-        $request->validate([
-            'email' => 'required',
-            'password' => 'required',
-        ]);
-
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('dashboard')
-                ->withSuccess('Signed in');
+            return redirect()->intended('dashboard')->withSuccess('Logado!');
         }
 
-        return redirect("login")->withSuccess('Login details are not valid');
+        return redirect("login")->withErrors('Email ou senha inválidos.');
     }
 
-    public function registration()
+    public function create(CreateUserRequest $request)
     {
-        return view('auth.registration');
-    }
-
-    public function customRegistration(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-        ]);
-
-        $data = $request->all();
-        $check = $this->create($data);
-
-        return redirect("dashboard")->withSuccess('You have signed-in');
-    }
-
-    public function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password'])
-        ]);
+        $this->userRepository->create($request->all());
+        return redirect("login")->withSuccess('Cadastro efetuado com sucesso!');
     }
 
     public function dashboard()
