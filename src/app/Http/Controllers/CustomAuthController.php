@@ -17,6 +17,15 @@ class CustomAuthController extends Controller
         $this->userRepository = $userRepository;
     }
 
+    public function dashboard()
+    {
+        if(Auth::check()){
+            return view('dashboard');
+        }
+
+        return redirect("login")->withSuccess('You are not allowed to access');
+    }
+
     public function login(LoginUserRequest $request)
     {
         $credentials = $request->only('email', 'password');
@@ -31,15 +40,6 @@ class CustomAuthController extends Controller
     {
         $this->userRepository->create($request->all());
         return redirect("login")->withSuccess('Cadastro efetuado com sucesso!');
-    }
-
-    public function dashboard()
-    {
-        if(Auth::check()){
-            return view('dashboard');
-        }
-
-        return redirect("login")->withSuccess('You are not allowed to access');
     }
 
     public function signOut() {

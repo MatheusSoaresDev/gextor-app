@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 /* Login e cadastro (Paginas Abertas) */
 
+Route::get('dashboard', [CustomAuthController::class, 'dashboard']);
 Route::get('/cadastro', function () {return view('LoginRegister.cadastro');});
 Route::get('/login', function () {return view('LoginRegister.login');});
 

@@ -1,4 +1,4 @@
-@extends('header')
+@extends('headers.header')
 
 <body class="bg-dark" style="background-color: #f1f2f7!important;">
     <div class="sufee-login d-flex align-content-center flex-wrap">
@@ -32,7 +32,7 @@
                         <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Entrar</button>
 
                         <div class="register-link m-t-15 text-center" style="margin-top: 10px;">
-                            <p>Ainda não tem cadastro? <a href="#"> Cadastre-se aqui!</a></p>
+                            <p>Ainda não tem cadastro? <a href="{{ route('cadastro') }}"> Cadastre-se aqui!</a></p>
                         </div>
 
                     </form>
