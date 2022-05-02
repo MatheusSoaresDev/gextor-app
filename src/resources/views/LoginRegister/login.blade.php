@@ -10,7 +10,7 @@
 
                         <div class="form-group">
                             <label>Endereço de email</label>
-                            <input type="email" class="form-control" placeholder="Email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                            <input type="email" class="form-control" placeholder="Email" name="email" value="{{ old('email') }}" required autofocus>
                         </div>
 
                         <div class="form-group">
@@ -30,6 +30,12 @@
                         </div>
 
                         <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Entrar</button>
+
+                        @if(session('success'))
+                            <div class="alert alert-success mt-3" role="alert">
+                                {{ session('success') }}
+                            </div>
+                        @endif
 
                         <div class="register-link m-t-15 text-center" style="margin-top: 10px;">
                             <p>Ainda não tem cadastro? <a href="{{ route('cadastro') }}"> Cadastre-se aqui!</a></p>

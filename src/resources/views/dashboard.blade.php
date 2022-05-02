@@ -9,9 +9,7 @@
     @include('headers.topMenu')
 
     <div class="content">
-        <!-- Animated -->
         <div class="animated fadeIn">
-            <!-- Widgets  -->
             <div class="row">
                 <div class="col-lg-3 col-md-6">
                     <div class="card">
@@ -86,14 +84,12 @@
                 </div>
             </div>
 
-            <div class="clearfix"></div>
-            <!-- Orders -->
             <div class="orders">
                 <div class="row">
-                    <div class="col-xl-8">
+                    <div class="col-xl-6">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="box-title">Orders </h4>
+                                <h4 class="box-title">Gastos Mensais</h4>
                             </div>
                             <div class="card-body--">
                                 <div class="table-stats order-table ov-h">
@@ -187,14 +183,16 @@
                                         </tr>
                                         </tbody>
                                     </table>
-                                </div> <!-- /.table-stats -->
+                                </div>
                             </div>
-                        </div> <!-- /.card -->
-                    </div>  <!-- /.col-lg-8 -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="clearfix"></div>
 
     <footer class="site-footer">
         <div class="footer-inner bg-white">

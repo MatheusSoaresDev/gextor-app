@@ -36,16 +36,16 @@ class CustomAuthController extends Controller
         return redirect("login")->withErrors('Email ou senha inválidos.');
     }
 
-    public function create(CreateUserRequest $request)
-    {
-        $this->userRepository->create($request->all());
-        return redirect("login")->withSuccess('Cadastro efetuado com sucesso!');
-    }
-
-    public function signOut() {
+    public function logout() {
         Session::flush();
         Auth::logout();
 
         return Redirect('login');
+    }
+
+    public function create(CreateUserRequest $request)
+    {
+        $this->userRepository->create($request->all());
+        return redirect("login")->withSuccess('Cadastro efetuado com sucesso. Faça login para acessar!');
     }
 }
