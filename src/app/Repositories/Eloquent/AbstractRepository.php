@@ -11,6 +11,11 @@ abstract class AbstractRepository
         $this->model = $this->resolveModel();
     }
 
+    /*public function all()
+    {
+        return $this->model->all();
+    }
+
     public function create(array $data)
     {
         return $this->model->create($data);
@@ -18,18 +23,18 @@ abstract class AbstractRepository
 
     public function get(string $id)
     {
-        // TODO: Implement get() method.
+        return $this->model->where('id', $id)->first();
     }
 
-    public function update(array $data)
+    public function update(string $id, array $data)
     {
-        // TODO: Implement update() method.
+        return $this->model->where('id', $id)->update($data);
     }
 
     public function delete(string $data)
     {
         // TODO: Implement delete() method.
-    }
+    }*/
 
     protected function resolveModel()
     {

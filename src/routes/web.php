@@ -16,7 +16,7 @@ Route::get('/login', function () {return view('LoginRegister.login');});
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', [CustomAuthController::class, 'dashboard'])->name('dashboard');
-    Route::get('/despesas/fixas', function () { return view('DespesasFixas'); })->name('despesasFixas');
+    Route::get('/despesas/fixas', [DespesaRecorrenteController::class, 'index'])->name('despesasFixas');
 });
 
 /* Formularios e Ações */
@@ -26,4 +26,5 @@ Route::get('logout', [CustomAuthController::class, 'logout'])->name('logout');
 Route::post('cadastro', [CustomAuthController::class, 'create'])->name('cadastro');
 
 Route::post('/despesa', [DespesaRecorrenteController::class, 'create'])->name('despesa');
+Route::put('/despesa', [DespesaRecorrenteController::class, 'update'])->name('editarDespesa');
 

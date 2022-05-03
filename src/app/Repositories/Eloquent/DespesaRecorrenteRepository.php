@@ -10,9 +10,37 @@ class DespesaRecorrenteRepository extends AbstractRepository implements DespesaR
 {
     protected $model = DespesaRecorrente::class;
 
+    public function all()
+    {
+        return $this->model->all();
+    }
+
     public function create(array $data)
     {
-        $data["id_user"] = Auth::id();
-        return parent::create($data);
+        $despesa = new $this->model();
+        $despesa->nome = $data["nome"];
+        $despesa->valor_base = $data["valor_base"];
+        $despesa->id_user = Auth::id();
+
+        return $despesa->save();
+    }
+
+    public function update(array $data)
+    {
+        $despesa = $this->get($data["id"]);
+        $despesa->nome = $data["nome"];
+        $despesa->valor_base = $data["valor_base"];
+
+        return $despesa->save();
+    }
+
+    public function get(string $id)
+    {
+        return $this->model->where('id', $id)->first();
+    }
+
+    public function delete(string $data)
+    {
+        // TODO: Implement delete() method.
     }
 }

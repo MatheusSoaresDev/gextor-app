@@ -86,7 +86,7 @@
 
             <div class="orders">
                 <div class="row">
-                    <div class="col-xl-6">
+                    <div class="col-xl-8">
                         <div class="card">
                             <div class="card-body">
                                 <div class="title-card d-flex justify-content-between align-items-center">
@@ -101,51 +101,37 @@
                                             <tr style="text-align: center;">
                                                 <th>ID</th>
                                                 <th>Nome</th>
+                                                <th>Valor Base</th>
                                                 <th>Status</th>
                                                 <th style="text-align: center;">Ações</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr style="text-align: center;">
-                                                <td> #5469 </td>
-                                                <td> <span class="name">Louis Stanley</span> </td>
-                                                <td><span class="badge badge-complete">Complete</span></td>
-                                                <td style="text-align: center;">
-                                                    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#mediumModal"><i class="fa fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-outline-danger btn-sm"><i class="fa fa-times-circle-o"></i></button>
-                                                </td>
-                                            </tr>
+                                            @foreach($despesasUsuario as $despesas)
+                                                <tr style="text-align: center;">
+                                                    <td> {{ mb_strimwidth($despesas->id,  0, 12, "...") }} </td>
+                                                    <td><span class="name">{{ $despesas->nome }}</span></td>
+                                                    <td> R$ {{ $despesas->valor_base }} </td>
+                                                    <td>
+                                                        @if($despesas->status == 1)
+                                                            <span class="badge badge-complete" style="width:65px;"> Ativo </span>
+                                                        @else
+                                                            <span class="badge badge-pending" style="width:65px;"> Inativo </span>
+                                                        @endif
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <a data-toggle="tooltip" data-placement="top" title="Editar"><button type="button" class="btn btn-outline-primary btn-sm" onclick="editarDespesa({{ $despesas }});"><!--data-toggle="modal" data-target="#mediumModal"--><i class="fa fa-edit"></i></button></a>
+                                                        <a data-toggle="tooltip" data-placement="top" title="Inativar"><button type="button" class="btn btn-outline-secondary btn-sm"><i class="fa fa-ban"></i></button></a>
+                                                        <a data-toggle="tooltip" data-placement="top" title="Excluir"><button type="button" class="btn btn-outline-danger btn-sm"><i class="fa fa-times-circle-o"></i></button></a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="mediumModalLabel">Medium Modal</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        There are three species of zebras: the plains zebra, the mountain zebra and the Grévy's zebra. The plains zebra
-                        and the mountain zebra belong to the subgenus Hippotigris, but Grévy's zebra is the sole species of subgenus
-                        Dolichohippus. The latter resembles an ass, to which it is closely related, while the former two are more
-                        horse-like. All three belong to the genus Equus, along with other living equids.
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Confirm</button>
                 </div>
             </div>
         </div>
@@ -163,10 +149,44 @@
                         <div class="form-group"><label for="nome" class=" form-control-label">Nome da despesa</label><input type="text" id="nome_despesa" name="nome" placeholder="Nome da despesa" class="form-control" minlength="5" required></div>
                         <div class="form-group"><label for="valor_base" class=" form-control-label">Valor Base</label><input type="text" id="valor_base" name="valor_base" placeholder="Valor base da despesa" class="form-control" data-mask="000.000.000.000.000,00" data-mask-reverse="true" required></div>
                         {{ csrf_field() }}
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-success">Cadastrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document" style="max-width: 434px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="smallmodalLabel">Editar despesa</h5>
+                </div>
+                <form method="POST" action="{{ route('editarDespesa') }}">
+                    <div class="modal-body">
+
+                        @method('PUT')
+                        <input type="hidden" name="id" id="id_despesa_editar">
+
+                        <div class="form-group">
+                            <label for="nome" class="form-control-label">Nome da despesa</label>
+                            <input type="text" id="nome_despesa_editar" value="" name="nome" placeholder="Nome da despesa" class="form-control" minlength="5" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="valor_base" class="form-control-label">Valor Base</label>
+                            <input type="text" id="valor_base_editar" value="" name="valor_base" placeholder="Valor base da despesa" class="form-control" data-mask="000.000.000.000.000,00" data-mask-reverse="true" required>
+                        </div>
+                        {{ csrf_field() }}
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Editar</button>
                     </div>
                 </form>
             </div>
@@ -226,6 +246,15 @@
 
 </style>
 
+<script>
 
+    function editarDespesa(despesa) {
+        jQuery("#id_despesa_editar").val(despesa.id);
+        jQuery("#nome_despesa_editar").val(despesa.nome);
+        jQuery("#valor_base_editar").val(despesa.valor_base);
+        jQuery('#modalEditar').modal('show');
+    }
+
+</script>
 
 @extends('headers.footer')

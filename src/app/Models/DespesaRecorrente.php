@@ -13,7 +13,7 @@ class DespesaRecorrente extends Model
     use HasFactory, HasPrimaryKeyUuid, Authenticatable;
 
     public $timestamps = true;
-    protected $fillable = ['id', 'nome', 'valor_base', 'status'];
+    protected $fillable = ['id', 'nome', 'valor_base', 'status', 'id_user'];
     protected $table = 'despesa_recorrente';
     protected $visible = ['id', 'nome', 'valor_base', 'status'];
 
