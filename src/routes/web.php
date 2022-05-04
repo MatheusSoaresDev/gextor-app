@@ -27,4 +27,5 @@ Route::post('cadastro', [CustomAuthController::class, 'create'])->name('cadastro
 
 Route::post('/despesa', [DespesaRecorrenteController::class, 'create'])->name('despesa');
 Route::put('/despesa', [DespesaRecorrenteController::class, 'update'])->name('editarDespesa');
+Route::delete('/despesa/{id}', [DespesaRecorrenteController::class, 'delete'])->name('deleteDespesa');
 

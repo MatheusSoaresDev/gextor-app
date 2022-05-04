@@ -19,7 +19,9 @@ class DespesaRecorrenteController extends Controller
     public function index()
     {
         $despesasUsuario = $this->despesaRecorrenteRepository->all();
-        return view('DespesasFixas', compact('despesasUsuario'));
+        $somaTotalDespesaFixa = $this->despesaRecorrenteRepository->somaTotalDespesaFixa();
+
+        return view('DespesasFixas', compact('despesasUsuario', 'somaTotalDespesaFixa'));
     }
 
     public function create(CreateDespesaFixaRequest $request)
@@ -38,5 +40,14 @@ class DespesaRecorrenteController extends Controller
             return redirect("despesas/fixas")->withSuccess('Despesa alterada com sucesso!');
         }
         return redirect("despesas/fixas")->withErrors('Não foi possivel alterar a despesa!');
+    }
+
+    public function delete(string $id)
+    {
+        $despesa = $this->despesaRecorrenteRepository->delete($id);
+        if($despesa){
+            return redirect("despesas/fixas")->withSuccess('Despesa removida com sucesso!');
+        }
+        return redirect("despesas/fixas")->withErrors('Não foi possivel remover a despesa!');
     }
 }

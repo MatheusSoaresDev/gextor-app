@@ -20,26 +20,8 @@
                                 </div>
                                 <div class="stat-content">
                                     <div class="text-left dib">
-                                        <div class="stat-text">$<span class="count">23569</span></div>
-                                        <div class="stat-heading">Revenue</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="stat-widget-five">
-                                <div class="stat-icon dib flat-color-2">
-                                    <i class="pe-7s-cart"></i>
-                                </div>
-                                <div class="stat-content">
-                                    <div class="text-left dib">
-                                        <div class="stat-text"><span class="count">3435</span></div>
-                                        <div class="stat-heading">Sales</div>
+                                        <div class="stat-text">R$&nbsp<span class="count">{{$somaTotalDespesaFixa}}</span></div>
+                                        <div class="stat-heading">Valor total das despesas</div>
                                     </div>
                                 </div>
                             </div>
@@ -52,12 +34,30 @@
                         <div class="card-body">
                             <div class="stat-widget-five">
                                 <div class="stat-icon dib flat-color-3">
-                                    <i class="pe-7s-browser"></i>
+                                    <i class="pe-7s-news-paper"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="text-left dib">
+                                        <div class="stat-text"><span class="count">3435</span></div>
+                                        <div class="stat-heading">Despesas Ativas</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="stat-widget-five">
+                                <div class="stat-icon dib color-red">
+                                    <i class="pe-7s-less"></i>
                                 </div>
                                 <div class="stat-content">
                                     <div class="text-left dib">
                                         <div class="stat-text"><span class="count">349</span></div>
-                                        <div class="stat-heading">Templates</div>
+                                        <div class="stat-heading">Despesas Inativas</div>
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +86,7 @@
 
             <div class="orders">
                 <div class="row">
-                    <div class="col-xl-8">
+                    <div class="col-xl-12">
                         <div class="card">
                             <div class="card-body">
                                 <div class="title-card d-flex justify-content-between align-items-center">
@@ -120,9 +120,12 @@
                                                         @endif
                                                     </td>
                                                     <td style="text-align: center;">
-                                                        <a data-toggle="tooltip" data-placement="top" title="Editar"><button type="button" class="btn btn-outline-primary btn-sm" onclick="editarDespesa({{ $despesas }});"><!--data-toggle="modal" data-target="#mediumModal"--><i class="fa fa-edit"></i></button></a>
-                                                        <a data-toggle="tooltip" data-placement="top" title="Inativar"><button type="button" class="btn btn-outline-secondary btn-sm"><i class="fa fa-ban"></i></button></a>
-                                                        <a data-toggle="tooltip" data-placement="top" title="Excluir"><button type="button" class="btn btn-outline-danger btn-sm"><i class="fa fa-times-circle-o"></i></button></a>
+                                                        <form method="POST" action="{{ route('deleteDespesa', $despesas->id) }}" onsubmit="return confirm('Tem certeza que deseja remover essa despesa?');">
+                                                            @method('delete')
+                                                            {{ csrf_field() }}
+                                                            <a data-toggle="tooltip" data-placement="top" title="Editar"><button type="button" class="btn btn-outline-primary btn-sm" onclick="editarDespesa({{ $despesas }});"><i class="fa fa-edit"></i></button></a>
+                                                            <a data-toggle="tooltip" data-placement="top" title="Excluir"><button type="submit" class="btn btn-outline-danger btn-sm"><i class="fa fa-times-circle-o"></i></button></a>
+                                                        </form>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -146,7 +149,7 @@
                 <form method="POST" action="{{ route('despesa') }}">
                     <div class="modal-body">
 
-                        <div class="form-group"><label for="nome" class=" form-control-label">Nome da despesa</label><input type="text" id="nome_despesa" name="nome" placeholder="Nome da despesa" class="form-control" minlength="5" required></div>
+                        <div class="form-group"><label for="nome" class=" form-control-label">Nome da despesa</label><input type="text" id="nome_despesa" name="nome" placeholder="Nome da despesa" class="form-control" minlength="2" required></div>
                         <div class="form-group"><label for="valor_base" class=" form-control-label">Valor Base</label><input type="text" id="valor_base" name="valor_base" placeholder="Valor base da despesa" class="form-control" data-mask="000.000.000.000.000,00" data-mask-reverse="true" required></div>
                         {{ csrf_field() }}
 
@@ -166,6 +169,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="smallmodalLabel">Editar despesa</h5>
                 </div>
+
                 <form method="POST" action="{{ route('editarDespesa') }}">
                     <div class="modal-body">
 
@@ -181,6 +185,14 @@
                             <label for="valor_base" class="form-control-label">Valor Base</label>
                             <input type="text" id="valor_base_editar" value="" name="valor_base" placeholder="Valor base da despesa" class="form-control" data-mask="000.000.000.000.000,00" data-mask-reverse="true" required>
                         </div>
+
+                        <div class="form-group">
+                            <select name="status" id="status" class="form-control">
+                                <option value="0">Inativo</option>
+                                <option value="1">Ativo</option>
+                            </select>
+                        </div>
+
                         {{ csrf_field() }}
 
                     </div>
@@ -252,6 +264,7 @@
         jQuery("#id_despesa_editar").val(despesa.id);
         jQuery("#nome_despesa_editar").val(despesa.nome);
         jQuery("#valor_base_editar").val(despesa.valor_base);
+        jQuery("#status").val(despesa.status);
         jQuery('#modalEditar').modal('show');
     }
 

@@ -12,7 +12,10 @@ class DespesaRecorrenteRepository extends AbstractRepository implements DespesaR
 
     public function all()
     {
-        return $this->model->all();
+        return $this->model
+            ->orderBy('status', 'desc')
+            ->orderBy('valor_base', 'desc')
+            ->get();
     }
 
     public function create(array $data)
@@ -30,6 +33,7 @@ class DespesaRecorrenteRepository extends AbstractRepository implements DespesaR
         $despesa = $this->get($data["id"]);
         $despesa->nome = $data["nome"];
         $despesa->valor_base = $data["valor_base"];
+        $despesa->status = $data["status"];
 
         return $despesa->save();
     }
@@ -39,8 +43,13 @@ class DespesaRecorrenteRepository extends AbstractRepository implements DespesaR
         return $this->model->where('id', $id)->first();
     }
 
-    public function delete(string $data)
+    public function delete(string $id)
     {
-        // TODO: Implement delete() method.
+        return $this->get($id)->delete();
+    }
+
+    public function somaTotalDespesaFixa()
+    {
+        return $this->model->where("status", "1")->sum('valor_base');
     }
 }
