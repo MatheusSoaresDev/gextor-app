@@ -20,12 +20,7 @@ class DespesaRecorrenteRepository extends AbstractRepository implements DespesaR
 
     public function create(array $data)
     {
-        $despesa = new $this->model();
-        $despesa->nome = $data["nome"];
-        $despesa->valor_base = $data["valor_base"];
-        $despesa->id_user = Auth::id();
-
-        return $despesa->save();
+        return $this->model->create($data);
     }
 
     public function update(array $data)

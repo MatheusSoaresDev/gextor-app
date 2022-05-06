@@ -9,6 +9,12 @@
     @include('headers.topMenu')
 
     <div class="content">
+        @if ($errors->any())
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">Houve um erro!</h4>
+                <p>@error('nome') {{ $message }} @enderror</p>
+            </div>
+        @endif
         <div class="animated fadeIn">
             <div class="row">
                 <div class="col-lg-3 col-md-6">

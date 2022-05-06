@@ -24,8 +24,15 @@ class UpdateDespesaRecorrenteRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => 'required',
+            'nome' => 'required|unique:despesa_recorrente,email,'.$this->user()->id,
             'valor_base' => 'required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'nome.unique' => 'Já existe uma despesa cadastrada com esse nome.'
         ];
     }
 }

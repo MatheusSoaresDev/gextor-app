@@ -24,8 +24,15 @@ class CreateDespesaFixaRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => 'required',
+            'nome' => 'required|unique:despesa_recorrente',
             'valor_base' => 'required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'nome.unique' => 'Já existe uma despesa cadastrada com esse nome.'
         ];
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\DespesaRecorrente;
 use Illuminate\Support\ServiceProvider;
+use App\Observers\DespesaRecorrenteObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,6 +33,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        DespesaRecorrente::observe(DespesaRecorrenteObserver::class);
     }
 }

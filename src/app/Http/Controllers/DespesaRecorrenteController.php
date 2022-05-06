@@ -26,7 +26,9 @@ class DespesaRecorrenteController extends Controller
 
     public function create(CreateDespesaFixaRequest $request)
     {
-        $despesa = $this->despesaRecorrenteRepository->create($request->all());
+        $data = $request->except("_token");
+
+        $despesa = $this->despesaRecorrenteRepository->create($data);
         if($despesa){
             return redirect("despesas/fixas")->withSuccess('Despesa cadastrada com sucesso!');
         }

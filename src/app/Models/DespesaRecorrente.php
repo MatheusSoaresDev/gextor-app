@@ -14,6 +14,7 @@ class DespesaRecorrente extends Model
 
     public $timestamps = true;
     protected $fillable = ['id', 'nome', 'valor_base', 'status', 'id_user'];
+    //protected $guarded = ['id', 'id_user'];
     protected $table = 'despesa_recorrente';
     protected $visible = ['id', 'nome', 'valor_base', 'status'];
 
