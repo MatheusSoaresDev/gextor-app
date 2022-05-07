@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('despesa_recorrente', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('nome')->unique();
-            $table->string('valor_base');
+            $table->float('valor_base');
             $table->boolean('status')->default(true);
 
             $table->string('id_user');

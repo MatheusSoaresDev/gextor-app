@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Models\DespesaRecorrente;
+use App\Models\User;
+use App\Observers\UserObserver;
 use Illuminate\Support\ServiceProvider;
 use App\Observers\DespesaRecorrenteObserver;
 
@@ -34,5 +36,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         DespesaRecorrente::observe(DespesaRecorrenteObserver::class);
+        User::observe(UserObserver::class);
     }
 }

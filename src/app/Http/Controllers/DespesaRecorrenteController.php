@@ -19,9 +19,8 @@ class DespesaRecorrenteController extends Controller
     public function index()
     {
         $despesasUsuario = $this->despesaRecorrenteRepository->all();
-        $somaTotalDespesaFixa = $this->despesaRecorrenteRepository->somaTotalDespesaFixa();
 
-        return view('DespesasFixas', compact('despesasUsuario', 'somaTotalDespesaFixa'));
+        return view('DespesasFixas', compact('despesasUsuario'));
     }
 
     public function create(CreateDespesaFixaRequest $request)
@@ -37,7 +36,9 @@ class DespesaRecorrenteController extends Controller
 
     public function update(UpdateDespesaRecorrenteRequest $request)
     {
-        $despesa = $this->despesaRecorrenteRepository->update($request->all());
+        $data = $request->except("_token", '_method');
+
+        $despesa = $this->despesaRecorrenteRepository->update($data);
         if($despesa){
             return redirect("despesas/fixas")->withSuccess('Despesa alterada com sucesso!');
         }

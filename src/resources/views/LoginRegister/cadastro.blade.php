@@ -9,7 +9,7 @@
                     {{ csrf_field() }}
                     <div class="has-warning form-group">
                         <label>Nome</label>
-                        <input type="text" class="form-control @error('nome') is-invalid @enderror" placeholder="Nome" name="nome" value="{{ old('nome') }}" required autofocus>
+                        <input type="text" class="form-control @error('nome') is-invalid @enderror" placeholder="Nome" name="name" value="{{ old('nome') }}" required autofocus>
                         @error('nome') <small style="color: red;">{{ $message }}</small> @enderror
                     </div>
 

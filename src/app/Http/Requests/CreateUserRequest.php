@@ -24,7 +24,7 @@ class CreateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => 'required|min:3',
+            'name' => 'required|min:3',
             'sobrenome' => 'required|min:3',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8|max:32',
@@ -34,8 +34,8 @@ class CreateUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'nome.required' => 'Preencha seu primeiro nome.',
-            'nome.min' => 'Seu nome deve ter ao menos 3 caracteres.',
+            'name.required' => 'Preencha seu primeiro nome.',
+            'name.min' => 'Seu nome deve ter ao menos 3 caracteres.',
 
             'sobrenome.required' => 'Preencha seu sobrenome.',
             'sobrenome.min' => 'Seu sobrenome deve ter ao menos 3 caracteres.',

@@ -12,39 +12,6 @@ class DespesaRecorrenteRepository extends AbstractRepository implements DespesaR
 
     public function all()
     {
-        return $this->model
-            ->orderBy('status', 'desc')
-            ->orderBy('valor_base', 'desc')
-            ->get();
-    }
-
-    public function create(array $data)
-    {
-        return $this->model->create($data);
-    }
-
-    public function update(array $data)
-    {
-        $despesa = $this->get($data["id"]);
-        $despesa->nome = $data["nome"];
-        $despesa->valor_base = $data["valor_base"];
-        $despesa->status = $data["status"];
-
-        return $despesa->save();
-    }
-
-    public function get(string $id)
-    {
-        return $this->model->where('id', $id)->first();
-    }
-
-    public function delete(string $id)
-    {
-        return $this->get($id)->delete();
-    }
-
-    public function somaTotalDespesaFixa()
-    {
-        return $this->model->where("status", "1")->sum('valor_base');
+        return parent::all()->orderBy('status', 'desc')->orderBy('valor_base', 'desc')->get();
     }
 }

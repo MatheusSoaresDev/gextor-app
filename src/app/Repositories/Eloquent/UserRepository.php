@@ -12,12 +12,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 
     public function create(array $data)
     {
-        $user = new $this->model();
-        $user->nome = $data['nome'].' '.$data['sobrenome'];
-        $user->email = $data["email"];
-        $user->password = Hash::make($data['password']);
-
-        return $user;
+        return parent::create($data);
     }
 
     public function get(string $id)

@@ -26,8 +26,10 @@
                                 </div>
                                 <div class="stat-content">
                                     <div class="text-left dib">
-                                        <div class="stat-text">R$&nbsp<span class="count">{{$somaTotalDespesaFixa}}</span></div>
-                                        <div class="stat-heading">Valor total das despesas</div>
+                                        <div class="stat-text">R$&nbsp
+                                            {{ $despesasUsuario->where('status', 1)->sum('valor_base') }}
+                                        </div>
+                                        <div class="stat-heading">Valor total das despesas ativas</div>
                                     </div>
                                 </div>
                             </div>
@@ -44,7 +46,9 @@
                                 </div>
                                 <div class="stat-content">
                                     <div class="text-left dib">
-                                        <div class="stat-text"><span class="count">3435</span></div>
+                                        <div class="stat-text">
+                                            {{ $despesasUsuario->where('status', 1)->count() }}
+                                        </div>
                                         <div class="stat-heading">Despesas Ativas</div>
                                     </div>
                                 </div>
@@ -62,26 +66,10 @@
                                 </div>
                                 <div class="stat-content">
                                     <div class="text-left dib">
-                                        <div class="stat-text"><span class="count">349</span></div>
+                                        <div class="stat-text">
+                                            {{ $despesasUsuario->where('status', 0)->count() }}
+                                        </div>
                                         <div class="stat-heading">Despesas Inativas</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="stat-widget-five">
-                                <div class="stat-icon dib flat-color-4">
-                                    <i class="pe-7s-users"></i>
-                                </div>
-                                <div class="stat-content">
-                                    <div class="text-left dib">
-                                        <div class="stat-text"><span class="count">2986</span></div>
-                                        <div class="stat-heading">Clients</div>
                                     </div>
                                 </div>
                             </div>
@@ -113,6 +101,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @if($despesasUsuario->count() == 0) <tr><td colspan="5" style="text-align: center;"> Não há despesas fixas cadastradas! </td></tr> @endif
                                             @foreach($despesasUsuario as $despesas)
                                                 <tr style="text-align: center;">
                                                     <td> {{ mb_strimwidth($despesas->id,  0, 12, "...") }} </td>
