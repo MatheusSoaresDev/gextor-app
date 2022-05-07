@@ -1,6 +1,6 @@
 @extends('headers.header')
 
-@section('title', 'Dashboard')
+@section('title', 'Despesas Fixas')
 
 @include('headers.leftMenu')
 
@@ -88,7 +88,7 @@
                                     <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#smallmodal"><i class="fa fa-plus"></i>&nbsp; Adicionar</button>
                                 </div>
                             </div>
-                            <div class="card-body--">
+                            <div class="card-body">
                                 <div class="table-stats order-table ov-h">
                                     <table class="table" style="margin-bottom: 15rem;">
                                         <thead>
@@ -115,7 +115,7 @@
                                                         @endif
                                                     </td>
                                                     <td style="text-align: center;">
-                                                        <form method="POST" action="{{ route('deleteDespesa', $despesas->id) }}" onsubmit="return confirm('Tem certeza que deseja remover essa despesa?');">
+                                                        <form method="POST" action="{{ route('deleteDespesaFixa', $despesas->id) }}" onsubmit="return confirm('Tem certeza que deseja remover essa despesa?');">
                                                             @method('delete')
                                                             {{ csrf_field() }}
                                                             <a data-toggle="tooltip" data-placement="top" title="Editar"><button type="button" class="btn btn-outline-primary btn-sm" onclick="editarDespesa({{ $despesas }});"><i class="fa fa-edit"></i></button></a>
@@ -141,7 +141,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="smallmodalLabel">Criar despesa</h5>
                 </div>
-                <form method="POST" action="{{ route('despesa') }}">
+                <form method="POST" action="{{ route('despesaFixa') }}">
                     <div class="modal-body">
 
                         <div class="form-group"><label for="nome" class=" form-control-label">Nome da despesa</label><input type="text" id="nome_despesa" name="nome" placeholder="Nome da despesa" class="form-control" minlength="2" required></div>
@@ -165,7 +165,7 @@
                     <h5 class="modal-title" id="smallmodalLabel">Editar despesa</h5>
                 </div>
 
-                <form method="POST" action="{{ route('editarDespesa') }}">
+                <form method="POST" action="{{ route('editarDespesaFixa') }}">
                     <div class="modal-body">
 
                         @method('PUT')

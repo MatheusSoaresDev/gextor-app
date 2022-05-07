@@ -27,8 +27,8 @@ class DespesaRecorrente extends Model
         return $this->hasMany(User::class, 'id');
     }
 
-    public function getValor_baseAtribute()
+    public function mes_despesa_recorrente()
     {
-        return 'teste';
+        return $this->hasMany(Mes_Despesa_Recorrente::class);
     }
 }

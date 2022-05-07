@@ -47,4 +47,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(DespesaRecorrente::class, 'id');
     }
+
+    public function despesas_parceladas()
+    {
+        //return $this->belongsTo(DespesaParcelada::class, 'id');
+    }
+
+    public function meses_despesas_recorrentes()
+    {
+        return $this->hasMany(Mes_Despesa_Recorrente::class, 'id');
+    }
 }

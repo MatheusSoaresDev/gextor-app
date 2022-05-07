@@ -20,7 +20,7 @@ class DespesaRecorrenteController extends Controller
     {
         $despesasUsuario = $this->despesaRecorrenteRepository->all();
 
-        return view('DespesasFixas', compact('despesasUsuario'));
+        return view('DespesaFixa', compact('despesasUsuario'));
     }
 
     public function create(CreateDespesaFixaRequest $request)
@@ -29,9 +29,9 @@ class DespesaRecorrenteController extends Controller
 
         $despesa = $this->despesaRecorrenteRepository->create($data);
         if($despesa){
-            return redirect("despesas/fixas")->withSuccess('Despesa cadastrada com sucesso!');
+            return redirect("despesa/fixa")->withSuccess('Despesa cadastrada com sucesso!');
         }
-        return redirect("despesas/fixas")->withErrors('Não foi possivel cadastrar a despesa!');
+        return redirect("despesa/fixa")->withErrors('Não foi possivel cadastrar a despesa!');
     }
 
     public function update(UpdateDespesaRecorrenteRequest $request)
@@ -40,17 +40,17 @@ class DespesaRecorrenteController extends Controller
 
         $despesa = $this->despesaRecorrenteRepository->update($data);
         if($despesa){
-            return redirect("despesas/fixas")->withSuccess('Despesa alterada com sucesso!');
+            return redirect("despesa/fixa")->withSuccess('Despesa alterada com sucesso!');
         }
-        return redirect("despesas/fixas")->withErrors('Não foi possivel alterar a despesa!');
+        return redirect("despesa/fixa")->withErrors('Não foi possivel alterar a despesa!');
     }
 
     public function delete(string $id)
     {
         $despesa = $this->despesaRecorrenteRepository->delete($id);
         if($despesa){
-            return redirect("despesas/fixas")->withSuccess('Despesa removida com sucesso!');
+            return redirect("despesa/fixa")->withSuccess('Despesa removida com sucesso!');
         }
-        return redirect("despesas/fixas")->withErrors('Não foi possivel remover a despesa!');
+        return redirect("despesa/fixa")->withErrors('Não foi possivel remover a despesa!');
     }
 }

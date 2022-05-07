@@ -14,5 +14,13 @@ class Mes_Despesa_Recorrente extends Model
     protected $table = 'mes_despesa_recorrente';
     protected $visible = ['id', 'data', 'valor', 'comentario', 'forma_pagamento', 'status', 'boleto', 'comprovante', 'id_user', 'id_depesa_recorrente'];
 
+    public function user()
+    {
+        return $this->hasMany(User::class);
+    }
 
+    public function despesa_recorrente()
+    {
+        return $this->belongsTo(DespesaRecorrente::class);
+    }
 }
