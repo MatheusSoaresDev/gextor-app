@@ -13,7 +13,7 @@ abstract class AbstractRepository
 
     public function all()
     {
-        return $this->model;
+        return $this->model->all();
     }
 
     public function create(array $data)

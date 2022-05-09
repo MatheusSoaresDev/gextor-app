@@ -84,31 +84,19 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-lg-12 col-md-12" style="margin-bottom: 1.875em;">
-                    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100%;">
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                            <a class="navbar-brand" href="#">Controle Mensal</a>
-                            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                                <!-- Separator -->
-                            </ul>
-                            <form class="form-inline my-2 my-lg-0">
-                                <div class="row form-group">
-                                    <div class="col-12 col-md-12">
-                                        <select name="select" id="select" class="form-control" style="width: 250px;">
-                                            <option value="0">Please select</option>
-                                            <option value="1">Option #1</option>
-                                            <option value="2">Option #2</option>
-                                            <option value="3">Option #3</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </form>
+            <div class="row" style="margin-bottom: 1.875em; background-color: #e3f2fd; padding: 20px;">
+                <div class="col-lg-12 col-md-12">
+                    <div class="row">
+                        <div class="col-sm">
+                            <h3> Controle Mensal </h3>
                         </div>
-                    </nav>
+                        <div class="col-sm" style="text-align: center;">
+                            <h3>{{ session()->get('data')['mes'] }} - {{ session()->get('data')['ano'] }}</h3>
+                        </div>
+                        <div class="col-sm" style="text-align: right;">
+                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#filtrarModal"><i class="fa fa-filter"></i>&nbsp; Filtrar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -223,7 +211,7 @@
                                                 </tr>
 
                                                 <tr>
-                                                    <td colspan="5" style="text-align: center;"> <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#criardespesafixamodal"><i class="fa fa-plus"></i>&nbsp; Adicionar</button></td>
+                                                    <td colspan="5" style="text-align: center;"><button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#criardespesafixamodal"><i class="fa fa-plus"></i>&nbsp; Adicionar</button></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -240,6 +228,61 @@
         </div>
     </div>
 
+    <div class="modal fade" id="filtrarModal" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document" style="max-width: 434px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="smallmodalLabel">Filtrar</h5>
+                </div>
+                <form method="GET" action="{{ route('dashboard') }}">
+                    <div class="modal-body">
+
+                        <div class="row form-group">
+                            <div class="col-12 col-md-12">
+                                <label for="select"></label>
+                                <select name="ano" id="select" class="form-control" required>
+                                    <option value="">Selecione o ano</option>
+                                    {{ $ano = date("Y") }}
+                                    @while ($ano <= 2035)
+                                        <option value="{{ $ano }}">{{ $ano }}</option>
+                                        {{ $ano++ }}
+                                    @endwhile
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-12 col-md-12">
+                                <label for="select"></label>
+                                <select name="mes" id="select" class="form-control" required>
+                                    <option value="">Selecione o mês</option>
+                                    <option value="01">Janeiro</option>
+                                    <option value="02">Fevereiro</option>
+                                    <option value="03">Março</option>
+                                    <option value="04">Abril</option>
+                                    <option value="05">Maio</option>
+                                    <option value="06">Junho</option>
+                                    <option value="07">Julho</option>
+                                    <option value="08">Agosto</option>
+                                    <option value="09">Setembro</option>
+                                    <option value="10">Outubro</option>
+                                    <option value="11">Novembro</option>
+                                    <option value="12">Dezembro</option>
+                                </select>
+                            </div>
+                        </div>
+                        {{ csrf_field() }}
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Filtrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="criardespesafixamodal" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm" role="document" style="max-width: 434px;">
             <div class="modal-content">
@@ -249,18 +292,36 @@
                 <form method="POST" action="{{ route('despesaFixa') }}">
                     <div class="modal-body">
 
-                        <div class="row form-group">
-                            <div class="col-12 col-md-12">
-                                <select name="select" id="select" class="form-control">
-                                    <option value="0">Please select</option>
-                                    <option value="1">Option #1</option>
-                                    <option value="2">Option #2</option>
-                                    <option value="3">Option #3</option>
-                                </select>
-                            </div>
+                        <div class="form-group">
+                            <label for="despesa_fixa" class=" form-control-label">Despesa Fixa</label>
+                            <select name="select" id="select" class="form-control" required>
+                                <option value="0">Selecione uma despesa</option>
+                                @foreach($despesasRecorrentes->where('status', '1') as $despesaRecorrente)
+                                    <option value="{{ $despesaRecorrente->id }}">{{ $despesaRecorrente->nome }} - R$&nbsp{{ number_format($despesaRecorrente->valor_base, '2', ',') }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
-                        <div class="form-group"><label for="valor_base" class=" form-control-label">Valor Base</label><input type="text" id="valor_base" name="valor_base" placeholder="Valor base da despesa" class="form-control" data-mask="000.000.000.000.000,00" data-mask-reverse="true" required></div>
+                        <div class="form-group">
+                            <label for="valor_despesa_fixa" class=" form-control-label">Valor</label>
+                            <input type="text" id="valor_despesa_fixa" name="valor_despesa_fixa" placeholder="Valor base da despesa" class="form-control" data-mask="000.000.000.000.000,00" data-mask-reverse="true" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="forma_pagamento_despesa_fixa">Forma de Pagamento</label>
+                            <select name="forma_pagamento_despesa_fixa" id="forma_pagamento_despesa_fixa" class="form-control">
+                                <option value="">Forma de pagamento</option>
+                                <option value="boleto">Boleto</option>
+                                <option value="pix">Pix</option>
+                                <option value="debito">Débito automático</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="comentario_despesa_fixa" class=" form-control-label">Comentário</label>
+                            <textarea type="text" id="comentario_despesa_fixa" name="comentario_despesa_fixa" placeholder="Comentário" class="form-control" required></textarea>
+                        </div>
+
                         {{ csrf_field() }}
 
                     </div>

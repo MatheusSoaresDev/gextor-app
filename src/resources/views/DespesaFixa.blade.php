@@ -102,7 +102,7 @@
                                         </thead>
                                         <tbody>
                                         @if($despesasUsuario->count() == 0) <tr><td colspan="5" style="text-align: center;"> Não há despesas fixas cadastradas! </td></tr> @endif
-                                            @foreach($despesasUsuario as $despesas)
+                                            @foreach($despesasUsuario->sortByDesc('status') as $despesas)
                                                 <tr style="text-align: center;">
                                                     <td> {{ mb_strimwidth($despesas->id,  0, 12, "...") }} </td>
                                                     <td><span class="name">{{ $despesas->nome }}</span></td>
